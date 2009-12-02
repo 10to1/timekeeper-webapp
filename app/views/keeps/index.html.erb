@@ -1,0 +1,26 @@
+<% title "Things that we've done."%>
+<table>
+<thead>
+	<tr>
+<% fields.each do |field|%>
+	<th width='<%= 100.0/fields.size%>%'><%= field %></th>
+<% end %>
+	</tr>
+</thead>
+<tbody>
+<% @keeps.each do |keep| %>
+	<tr>
+	  <% fields.each do |field| %>
+		<td>
+			<% if field == 'tracked' %>
+				<% html_id = "tracked-#{keep.name}-#{keep.pk}" %>
+				<input type='checkbox' id='<%= html_id %>'<% if keep.tracked %>checked='checked'<% end %> onClick="$.post('/keep/<%= keep.name%>/<%=keep.pk%>/tracked/'+$('#<%=html_id%>').attr('checked'));"/>
+			<% else %>
+				<%= keep.send(field) %>
+			<% end%>
+		</td>
+	  <% end %>
+	</tr>
+<% end %>	
+</tbody>
+</table>
